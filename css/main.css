@@ -1,0 +1,14 @@
+.map {
+  min-height: calc(100vh - 64px);
+}
+#pano {
+  width: 160px;
+  height: 160px;
+}
+.search-location {
+  width: 76%;
+  margin-left: 16px;
+}
+.text-left {
+  text-align: left;
+}

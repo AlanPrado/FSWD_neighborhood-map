@@ -1,0 +1,8 @@
+[
+  {"title": "Canyon de Chelly", "location": {"lat": 36.14319567, "lng": -109.3388303}},
+  {"title": "Casa Grande Ruins", "location": {"lat": 32.99702582, "lng": -111.5325383}},
+  {"title": "Chiricahua", "location": {"lat": 32.01214618, "lng": -109.341607}},
+  {"title": "Coronado", "location": {"lat": 31.34900397, "lng": -110.2561574}},
+  {"title": "Fort Bowie", "location": {"lat": 32.14925942, "lng": -109.451132}},
+  {"title": "Glen Canyon", "location": {"lat": 37.51841301, "lng": -110.7718311}}
+]
