@@ -12,3 +12,29 @@
 .text-left {
   text-align: left;
 }
+.infowindow .content {
+  display: flex;
+}
+.infowindow .temp {
+  margin: 0px auto;
+}
+.infowindow .current {
+  font-size: 2em;
+}
+
+.loading {
+  margin-top: 2em;
+}
+
+.error-msg {
+  margin-top: 2em;
+  color: red;
+}
+
+.infowindow .mdl-card__title {
+  border-bottom: 1px #bdb solid;
+}
+
+.infowindow .mdl-card__title .mdl-card__title-text {
+  font-weight: bold;
+}
