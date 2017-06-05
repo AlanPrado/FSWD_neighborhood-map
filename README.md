@@ -1,6 +1,7 @@
 # Project: Neighborhood Map
 
 `Neighborhood Map` is a project that show markers associated with locations in list view.
+The markers represents U.S. parks and when it's clicked show up weather and google street view information.
 
 Data from file [locations.json](https://github.com/AlanPrado/neighborhood-map/blob/master/data/locations.json) are hard-coded and were extracted from [NPS](https://www.nps.gov/subjects/digital/nps-data-api.htm).
 
