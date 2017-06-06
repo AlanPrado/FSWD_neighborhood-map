@@ -129,7 +129,7 @@ var maps = (function () {
         content += '  <div class="mdl-card__title"><h2 class="mdl-card__title-text">' + this.marker.title + '</h2></div>';
         content += '  <div class="mdl-card__actions content">';
         content += '    <div class="panorama">' + this.panorama + '</div>';
-        content += '    <div class="temp text-center">' + this.temperature + '</div>';
+        content += '    <div class="temp">' + this.temperature + '</div>';
         content += '  </div>';
         content += '</div>';
         self.infowindow.setContent(content);
@@ -148,8 +148,8 @@ var maps = (function () {
         var currentTemp = '<div class="current">' + forecast.temp + ' F°</div>';
         var minTemp = '<div class="min">Min: ' + forecast.temp_min + ' F°</div>';
         var maxTemp = '<div class="max">Max: ' + forecast.temp_max +' F°</div>';
-
-        this.temperature = header + currentTemp + minTemp + maxTemp;
+        var credits = '<div class="credits">Power by <a href="https://openweathermap.org/">Open Weather Map</a></div>';
+        this.temperature = header + currentTemp + minTemp + maxTemp + credits;
       };
 
       this.setTemperatureError = function(message) {

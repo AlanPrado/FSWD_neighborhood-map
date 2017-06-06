@@ -11,6 +11,10 @@
   text-align: left;
 }
 
+.infowindow {
+  width: 400px;
+}
+
 .infowindow .content {
   display: flex;
 }
@@ -40,7 +44,14 @@
   font-weight: bold;
 }
 
+.infowindow .credits {
+  border-top: 1px #bdb solid;
+  font-size: 0.7em;
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
 #pano {
-  width: 160px;
-  height: 160px;
+  width: 200px;
+  height: 200px;
 }
