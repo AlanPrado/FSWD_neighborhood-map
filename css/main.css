@@ -1,23 +1,24 @@
 .map {
   min-height: calc(100vh - 64px);
 }
-#pano {
-  width: 160px;
-  height: 160px;
-}
+
 .search-location {
   width: 76%;
   margin-left: 16px;
 }
+
 .text-left {
   text-align: left;
 }
+
 .infowindow .content {
   display: flex;
 }
+
 .infowindow .temp {
   margin: 0px auto;
 }
+
 .infowindow .current {
   font-size: 2em;
 }
@@ -37,4 +38,9 @@
 
 .infowindow .mdl-card__title .mdl-card__title-text {
   font-weight: bold;
+}
+
+#pano {
+  width: 160px;
+  height: 160px;
 }

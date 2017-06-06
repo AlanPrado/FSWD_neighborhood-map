@@ -1,4 +1,4 @@
-var MAPS = (function () {
+var maps = (function () {
   // TODO: save data in localstorage
   var Model = function (locations) {
     this.locations = locations;
@@ -57,7 +57,7 @@ var MAPS = (function () {
     this.filterLocations = ko.computed(function () {
       self.applyFilters();
 
-      return ko.utils.arrayFilter(self.locations(), function (location) {
+      return self.locations().filter(function (location) {
         return location.visible;
       });
     });
@@ -80,7 +80,6 @@ var MAPS = (function () {
     this.infowindow = undefined;
     this.defaultIcon = undefined;
     this.highlightedIcon = undefined;
-    this.allMarkers = [];
     this.markers = [];
     this.controller = undefined;
     this.infowindowView = undefined;
@@ -121,27 +120,28 @@ var MAPS = (function () {
 
     function InfoWindowView (marker) {
       this.marker = marker;
+      this.temperature = null;
+      this.panorama = null;
 
       this.render = function () {
         var content = '';
         content += '<div class="mdl-card infowindow">';
         content += '  <div class="mdl-card__title"><h2 class="mdl-card__title-text">' + this.marker.title + '</h2></div>';
         content += '  <div class="mdl-card__actions content">';
-        content += '    <div class="panorama"><div class="loading">Loading Street View data...</div></div>';
-        content += '    <div class="temp text-center"><div class="loading">Loading weather data...</div></div>';
+        content += '    <div class="panorama">' + this.panorama + '</div>';
+        content += '    <div class="temp text-center">' + this.temperature + '</div>';
         content += '  </div>';
         content += '</div>';
         self.infowindow.setContent(content);
       };
 
       this.setPanorama = function (hasPanorama) {
-        var panorama = $('.infowindow').find(".panorama");
         if (hasPanorama) {
-          panorama.html('<div id="pano"></div>');
+          this.panorama = '<div id="pano"></div>';
         } else {
-          panorama.html('<div class="error-msg">No Street View Found</div>');
+          this.panorama = '<div class="error-msg">No Street View Found</div>';
         }
-      }
+      };
 
       this.setTemperature = function(forecast) {
         var header = '<h4 class="title">Temperature</h4>';
@@ -149,14 +149,13 @@ var MAPS = (function () {
         var minTemp = '<div class="min">Min: ' + forecast.temp_min + ' F°</div>';
         var maxTemp = '<div class="max">Max: ' + forecast.temp_max +' F°</div>';
 
-        $('.infowindow').find(".temp").html(header + currentTemp + minTemp + maxTemp);
+        this.temperature = header + currentTemp + minTemp + maxTemp;
       };
 
       this.setTemperatureError = function(message) {
-        $('.infowindow').find(".temp").html('<div class="error-msg">"' + message + "</div>");
+        this.temperature = '<div class="error-msg">"' + message + "</div>";
       };
 
-      this.render();
     }
 
     function getStreetView (data, status) {
@@ -168,6 +167,7 @@ var MAPS = (function () {
         );
 
         self.infowindowView.setPanorama(true);
+        self.infowindowView.render();
 
         var panorama = new google.maps.StreetViewPanorama(
           document.getElementById('pano'),
@@ -182,6 +182,7 @@ var MAPS = (function () {
 
       } else {
         self.infowindowView.setPanorama(false);
+        self.infowindowView.render();
       }
     }
 
@@ -194,13 +195,15 @@ var MAPS = (function () {
         self.infowindowView = new InfoWindowView(marker);
         self.infowindow.open(self.map, marker);
 
-        streetViewService.getPanoramaByLocation(marker.position, STREET_VIEW_RADIUS, getStreetView);
         self.controller.getForecast(marker.position)
           .then(function(forecast) {
             self.infowindowView.setTemperature(forecast);
           })
           .fail(function() {
             self.infowindowView.setTemperatureError('Could not load forecast data.');
+          })
+          .done(function() {
+            streetViewService.getPanoramaByLocation(marker.position, STREET_VIEW_RADIUS, getStreetView);
           });
       }
     };
@@ -222,9 +225,9 @@ var MAPS = (function () {
         var marker = new google.maps.Marker({
           position: locations[i].location,
           title: locations[i].title,
-          animation: google.maps.Animation.DROP,
           icon: self.defaultIcon,
-          id: i
+          id: i,
+          map: self.map
         });
 
         marker.addListener('click', function() {
@@ -237,21 +240,14 @@ var MAPS = (function () {
           this.setIcon(self.defaultIcon);
         });
 
-        self.allMarkers.push(marker);
+        self.markers.push(marker);
       }
     };
 
     this.refreshMarkers = function (KOLocations) {
-      self.markers = [];
-
       var locations = KOLocations();
       for (var i = 0; i < locations.length; i++) {
-        if (locations[i].visible) {
-          self.allMarkers[i].setMap(self.map);
-          self.markers.push(self.allMarkers[i]);
-        } else {
-          self.allMarkers[i].setMap(null);
-        }
+        self.markers[i].setVisible(locations[i].visible);
       }
     };
 
@@ -260,8 +256,8 @@ var MAPS = (function () {
     };
 
     this.findMakerByLocation = function (location) {
-      for (var i = 0; i < self.allMarkers.length; i++) {
-        var currentMarker = self.allMarkers[i];
+      for (var i = 0; i < self.markers.length; i++) {
+        var currentMarker = self.markers[i];
         if (currentMarker.title === location.title) {
           return currentMarker;
         }
