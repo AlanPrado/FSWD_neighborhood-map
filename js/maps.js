@@ -196,13 +196,13 @@ var maps = (function () {
         self.infowindow.open(self.map, marker);
 
         self.controller.getForecast(marker.position)
-          .then(function(forecast) {
+          .done(function(forecast) {
             self.infowindowView.setTemperature(forecast);
           })
           .fail(function() {
             self.infowindowView.setTemperatureError('Could not load forecast data.');
           })
-          .done(function() {
+          .always(function() {
             streetViewService.getPanoramaByLocation(marker.position, STREET_VIEW_RADIUS, getStreetView);
           });
       }
@@ -252,7 +252,7 @@ var maps = (function () {
     };
 
     this.setCenter = function (location) {
-      self.map.setCenter(location);
+      self.map.panTo(location);
     };
 
     this.findMakerByLocation = function (location) {
@@ -353,8 +353,13 @@ var maps = (function () {
       });
     };
 
+    this.error = function () {
+      alert('Could not load google maps api');
+    }
+
     return {
-      "init": this.init
+      "init": this.init,
+      "error": this.error
     };
   })();
 
