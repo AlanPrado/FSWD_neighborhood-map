@@ -5,7 +5,7 @@ The markers represents U.S. parks and when it's clicked show up weather and goog
 
 Data from file [locations.json](https://github.com/AlanPrado/neighborhood-map/blob/master/data/locations.json) are hard-coded and were extracted from [NPS](https://www.nps.gov/subjects/digital/nps-data-api.htm).
 
-This projects also includes [Knockout JS](knockoutjs.com) to bind list view with its model, third party [Weather API](https://openweathermap.org/api) to display weather data and [Google MDL](https://getmdl.io/started/) for presentation.
+This project also includes [Knockout JS](knockoutjs.com) to bind list view with its model, third party [Weather API](https://openweathermap.org/api) to display weather data and [Google MDL](https://getmdl.io/started/) for presentation.
 
 ## Quick Start
 
